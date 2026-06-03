@@ -15,6 +15,10 @@ let package = Package(
         )
     ],
     targets: [
-        .target(name: "PDFViewKit")
+        .target(name: "PDFViewKit"),
+        .testTarget(
+            name: "PDFViewKitTests",
+            dependencies: ["PDFViewKit"]
+        )
     ]
 )
