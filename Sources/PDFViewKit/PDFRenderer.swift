@@ -16,11 +16,12 @@ public enum PDFRenderer {
         to destination: URL,
         atPageSize pageSize: some PageSize
     ) throws {
-        let pdfSize = pageSize.size(atDPI: .print)
+        let pdfSize = pageSize.size(atDPI: .pdf)
         let viewRenderingDPI: DPI = .display
         let viewSize = pageSize.size(atDPI: viewRenderingDPI)
 
-        let scaleFactor = pdfSize.width / viewSize.width
+        let viewToPDFScaleFactor = pdfSize.width / viewSize.width
+        let rasterizationScaleFactor = DPI.print.rawValue / viewRenderingDPI.rawValue
         var box = CGRect(
             origin: .zero,
             size: pdfSize
@@ -38,12 +39,12 @@ public enum PDFRenderer {
             let renderer = ImageRenderer(content: renderedView)
             renderer.proposedSize = ProposedViewSize(viewSize)
 
-            renderer.render(rasterizationScale: scaleFactor) { _, renderer in
+            renderer.render(rasterizationScale: rasterizationScaleFactor) { _, renderer in
                 context.beginPDFPage(nil)
 
                 context.scaleBy(
-                    x: scaleFactor,
-                    y: scaleFactor
+                    x: viewToPDFScaleFactor,
+                    y: viewToPDFScaleFactor
                 )
 
                 renderer(context)

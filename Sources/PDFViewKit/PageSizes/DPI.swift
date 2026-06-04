@@ -13,6 +13,8 @@ public enum DPI: CGFloat {
 
     // based on https://www.adobe.com/uk/creativecloud/photography/discover/dots-per-inch-dpi-resolution.html
 
+    case pdf = 72 // PDF user-space points (1/72 inch)
+
     case display = 96
     case displayHigh = 144 // 150%
 

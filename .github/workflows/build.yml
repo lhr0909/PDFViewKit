@@ -15,5 +15,7 @@ jobs:
       - uses: swift-actions/setup-swift@v2
         with:
           swift-version: "6.2"
+      - name: Test
+        run: swift test --configuration release -v
       - name: Build
         run: swift build --configuration release -v
